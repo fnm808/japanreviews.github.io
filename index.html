@@ -62,7 +62,7 @@
         .tier-b { background: linear-gradient(135deg, #ffeb3b, #fdd835); }
         .tier-c { background: linear-gradient(135deg, #66bb6a, #4caf50); }
         .tier-d { background: linear-gradient(135deg, #42a5f5, #2196f3); }
-        .tier-f { background: linear-gradient(135deg, #78909c, #607d8b); }
+
 
         .tier-items {
             flex: 1;
@@ -76,13 +76,31 @@
 
         .item {
             background: white;
-            padding: 12px 20px;
+            padding: 8px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             font-weight: 500;
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .item-name {
+            font-size: 0.9em;
+            text-align: center;
+            word-wrap: break-word;
         }
 
         .item:hover {
@@ -181,30 +199,26 @@
         // Your tier list data - customize this!
         const tierData = {
             S: [
-                { name: "Pizza", description: "The perfect food. Versatile, delicious, and brings people together. Can be eaten for any meal." },
-                { name: "Coffee", description: "Essential fuel for productivity. The aroma alone is worth it, but the taste and energy boost make it S-tier." }
+                { name: "Pizza", image: "pizza.jpg", description: "The perfect food. Versatile, delicious, and brings people together. Can be eaten for any meal." },
+                { name: "Coffee", image: "coffee.jpg", description: "Essential fuel for productivity. The aroma alone is worth it, but the taste and energy boost make it S-tier." }
             ],
             A: [
-                { name: "Tacos", description: "Incredibly versatile and always satisfying. Easy to customize and perfect for any occasion." },
-                { name: "Sushi", description: "Fresh, artistic, and delicious. A culinary experience that's both healthy and indulgent." },
-                { name: "Burgers", description: "Classic comfort food done right. When made well, few things are more satisfying." }
+                { name: "Tacos", image: "tacos.jpg", description: "Incredibly versatile and always satisfying. Easy to customize and perfect for any occasion." },
+                { name: "Sushi", image: "sushi.jpg", description: "Fresh, artistic, and delicious. A culinary experience that's both healthy and indulgent." },
+                { name: "Burgers", image: "burgers.jpg", description: "Classic comfort food done right. When made well, few things are more satisfying." }
             ],
             B: [
-                { name: "Pasta", description: "Reliable and comforting. Endless varieties keep it interesting, though it can be hit or miss." },
-                { name: "Sandwiches", description: "Convenient and practical. Great for lunch but lacks the excitement of higher tiers." },
-                { name: "Salads", description: "Healthy and refreshing, but often needs other elements to truly shine." }
+                { name: "Pasta", image: "pasta.jpg", description: "Reliable and comforting. Endless varieties keep it interesting, though it can be hit or miss." },
+                { name: "Sandwiches", image: "sandwiches.jpg", description: "Convenient and practical. Great for lunch but lacks the excitement of higher tiers." },
+                { name: "Salads", image: "salads.jpg", description: "Healthy and refreshing, but often needs other elements to truly shine." }
             ],
             C: [
-                { name: "Hot Dogs", description: "Fun at events but not something you crave regularly. Does the job but rarely impresses." },
-                { name: "Cereal", description: "Quick and easy breakfast option, but gets old fast and not very nutritious." }
+                { name: "Hot Dogs", image: "hotdogs.jpg", description: "Fun at events but not something you crave regularly. Does the job but rarely impresses." },
+                { name: "Cereal", image: "cereal.jpg", description: "Quick and easy breakfast option, but gets old fast and not very nutritious." }
             ],
             D: [
-                { name: "Oatmeal", description: "Healthy but boring. Needs lots of additions to be enjoyable." },
-                { name: "Plain Rice", description: "A blank canvas that needs help. On its own, it's pretty forgettable." }
-            ],
-            F: [
-                { name: "Black Licorice", description: "An acquired taste that most people never acquire. Why does this exist?" },
-                { name: "Soggy Fries", description: "A disappointment every time. The worst version of something that could be great." }
+                { name: "Oatmeal", image: "oatmeal.jpg", description: "Healthy but boring. Needs lots of additions to be enjoyable." },
+                { name: "Plain Rice", image: "rice.jpg", description: "A blank canvas that needs help. On its own, it's pretty forgettable." }
             ]
         };
 
@@ -213,7 +227,18 @@
         function createItem(itemData, tier) {
             const item = document.createElement('div');
             item.className = 'item';
-            item.textContent = itemData.name;
+            
+            const img = document.createElement('img');
+            img.className = 'item-image';
+            img.src = itemData.image;
+            img.alt = itemData.name;
+            
+            const name = document.createElement('div');
+            name.className = 'item-name';
+            name.textContent = itemData.name;
+            
+            item.appendChild(img);
+            item.appendChild(name);
             item.onclick = () => selectItem(item, itemData);
             return item;
         }
